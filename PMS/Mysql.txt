@@ -1,0 +1,95 @@
+-- Create the database
+CREATE DATABASE IF NOT EXISTS pharmacy_management;
+
+-- Select the database
+USE pharmacy_management;
+
+-- Create the Inventory Table
+CREATE TABLE Inventory (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    drug_name VARCHAR(100) NOT NULL,
+    quantity INT NOT NULL CHECK (quantity >= 0),
+    expiry_date DATE NOT NULL,
+    price DECIMAL(10, 2) NOT NULL CHECK (price >= 0)
+);
+
+-- Create the Prescriptions Table
+CREATE TABLE Prescriptions (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    patient_name VARCHAR(100) NOT NULL,
+    drug_id INT NOT NULL,
+    dosage VARCHAR(50) NOT NULL,
+    date DATE NOT NULL,
+    status ENUM('Pending', 'Filled', 'Cancelled') NOT NULL,
+    FOREIGN KEY (drug_id) REFERENCES Inventory(id)
+);
+
+-- Create the Billing Table
+CREATE TABLE Billing (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    prescription_id INT NOT NULL,
+    total_amount DECIMAL(10, 2) NOT NULL CHECK (total_amount >= 0),
+    payment_status ENUM('Pending', 'Paid', 'Failed') NOT NULL,
+    date DATE NOT NULL,
+    FOREIGN KEY (prescription_id) REFERENCES Prescriptions(id)
+);
+
+--Adding a Low Stock Alert
+USE pharmacy_management;
+
+ALTER TABLE AlertSettings
+ADD COLUMN low_stock_threshold INT NOT NULL DEFAULT 10;
+
+-- Update the existing row to set a default value
+UPDATE AlertSettings SET low_stock_threshold = 10 WHERE id = 1;
+
+
+
+
+
+--Run the following SQL to alter the Prescriptions table:
+
+ALTER TABLE Prescriptions
+ADD COLUMN dosage_quantity INT NOT NULL DEFAULT 1,
+ADD COLUMN dosage_instructions VARCHAR(255);
+
+--If not worked
+-- Disable safe update mode
+SET SQL_SAFE_UPDATES = 0;
+
+-- Run your queries
+UPDATE Prescriptions
+SET dosage_quantity = CAST(SUBSTRING_INDEX(dosage, ' ', 1) AS UNSIGNED),
+    dosage_instructions = TRIM(SUBSTRING(dosage, LOCATE(' ', dosage)))
+WHERE dosage REGEXP '^[0-9]+';
+
+ALTER TABLE Prescriptions
+DROP COLUMN dosage;
+
+-- Optionally re-enable safe update mode
+SET SQL_SAFE_UPDATES = 1;
+
+
+
+
+Run the following SQL to create the Users table:
+
+CREATE TABLE Users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL
+);
+
+-- Insert a default user for testing (we'll hash the password in the app)
+INSERT INTO Users (username, password_hash) VALUES ('admin', 'temp');
+
+1.	python app.py.
+2.	Visit http://127.0.0.1:5000/init_user to hash the default user’s password. This will set the admin user’s password to admin123.
+3.	You should see a message: "Default user initialized. Username: admin, Password: admin123".
+	 Test the Authentication
+1.	Access the App: 
+o	Go to http://127.0.0.1:5000/. You should be redirected to the login page.
+2.	Login: 
+o	Enter admin as the username and admin123 as the password.
+o	You should be redirected to the homepage with a "Login successful!" message.
+

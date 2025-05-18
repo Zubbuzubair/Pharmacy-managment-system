@@ -1,0 +1,20 @@
+{% extends "base.html" %}  <!-- Extend base template -->
+{% block title %}Set Alerts{% endblock %}  <!-- Set page title -->
+{% block content %}  <!-- Define content block -->
+    <h1 class="mb-4">Set Alerts</h1>  <!-- Main heading with margin-bottom -->
+    <form method="POST" action="/set_alerts">  <!-- Form to submit alert settings -->
+        <div class="mb-3">  <!-- Form group with margin-bottom -->
+            <label for="expiry_days" class="form-label">Expiry Days:</label>  <!-- Label for expiry days input -->
+            <input type="number" id="expiry_days" name="expiry_days" class="form-control" value="{{ expiry_days }}" required>  <!-- Input for expiry days -->
+        </div>
+        <div class="mb-3">  <!-- Form group with margin-bottom -->
+            <label for="out_of_stock_threshold" class="form-label">Out of Stock Threshold:</label>  <!-- Label for out-of-stock threshold -->
+            <input type="number" id="out_of_stock_threshold" name="out_of_stock_threshold" class="form-control" value="{{ out_of_stock_threshold }}" required>  <!-- Input for out-of-stock threshold -->
+        </div>
+        <div class="mb-3">  <!-- Form group with margin-bottom -->
+            <label for="low_stock_threshold" class="form-label">Low Stock Threshold:</label>  <!-- Label for low-stock threshold -->
+            <input type="number" id="low_stock_threshold" name="low_stock_threshold" class="form-control" value="{{ low_stock_threshold }}" required>  <!-- Input for low-stock threshold -->
+        </div>
+        <button type="submit" class="btn btn-primary">Save Changes</button>  <!-- Submit button to save settings -->
+    </form>
+{% endblock %}

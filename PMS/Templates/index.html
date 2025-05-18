@@ -1,0 +1,171 @@
+{% extends "base.html" %}
+{% block title %}Pharmacy Management System{% endblock %}
+{% block content %}
+    <h1 class="mb-4">Welcome to Pharmacy Management System</h1>
+    
+    <!-- Alert Summary -->
+    <div class="alert-container">
+        <p><span class="alert-label">Alert Expired Items</span> = <a href="/expired_items" class="text-primary">{{ expired_count }}</a></p>
+        <p><span class="alert-label">Alert Expiry Before Day</span> = <a href="/expiring_soon_items" class="text-primary">{{ expiry_count }}</a></p>
+        <p><span class="alert-label">Alert Before Out of Stock</span> = <a href="/out_of_stock_items" class="text-primary">{{ out_of_stock_count }}</a></p>
+        <p><span class="alert-label">Alert Low Stock</span> = <a href="/low_stock_items" class="text-primary">{{ low_stock_count }}</a></p>
+    </div>
+
+    <!-- Dashboard Charts -->
+    <h2 class="mt-5 mb-4">Dashboard</h2>
+    <div class="row">
+        <!-- Stock Levels Chart -->
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Stock Levels</h3>
+                    <canvas id="stockChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <!-- Expiring Items Chart -->
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Expiring Items</h3>
+                    <canvas id="expiringChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <!-- Billing Trends Chart -->
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Billing Trends</h3>
+                    <canvas id="billingChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Include Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Function to safely parse JSON data
+        function getChartData(dataStr) {
+            try {
+                const data = JSON.parse(dataStr);
+                return Array.isArray(data) ? data : [];
+            } catch (e) {
+                console.error('Error parsing data:', e);
+                return [];
+            }
+        }
+
+        // Stock Levels Chart (Bar Chart)
+        const stockLabels = getChartData('{{ stock_labels | tojson | safe }}');
+        const stockQuantities = getChartData('{{ stock_quantities | tojson | safe }}');
+        const stockCtx = document.getElementById('stockChart').getContext('2d');
+        if (stockCtx && stockLabels.length > 0 && stockQuantities.length > 0) {
+            new Chart(stockCtx, {
+                type: 'bar',
+                data: {
+                    labels: stockLabels,
+                    datasets: [{
+                        label: 'Quantity in Stock',
+                        data: stockQuantities,
+                        backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Quantity'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Drug Name'
+                            }
+                        }
+                    }
+                }
+            });
+        } else {
+            console.warn('Stock chart data is missing or empty.');
+        }
+
+        // Expiring Items Chart (Pie Chart)
+        const expiringLabels = getChartData('{{ expiring_labels | tojson | safe }}');
+        const expiringData = getChartData('{{ expiring_data | tojson | safe }}');
+        const expiringCtx = document.getElementById('expiringChart').getContext('2d');
+        if (expiringCtx && expiringLabels.length > 0 && expiringData.length > 0) {
+            new Chart(expiringCtx, {
+                type: 'pie',
+                data: {
+                    labels: expiringLabels,
+                    datasets: [{
+                        label: 'Expiring Items',
+                        data: expiringData,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.6)',
+                            'rgba(255, 206, 86, 0.6)',
+                            'rgba(75, 192, 192, 0.6)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true
+                }
+            });
+        } else {
+            console.warn('Expiring chart data is missing or empty.');
+        }
+
+        // Billing Trends Chart (Line Chart)
+        const billingLabels = getChartData('{{ billing_labels | tojson | safe }}');
+        const billingTotals = getChartData('{{ billing_totals | tojson | safe }}');
+        const billingCtx = document.getElementById('billingChart').getContext('2d');
+        if (billingCtx && billingLabels.length > 0 && billingTotals.length > 0) {
+            new Chart(billingCtx, {
+                type: 'line',
+                data: {
+                    labels: billingLabels,
+                    datasets: [{
+                        label: 'Total Billing Amount',
+                        data: billingTotals,
+                        fill: false,
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Total Amount'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Month'
+                            }
+                        }
+                    }
+                }
+            });
+        } else {
+            console.warn('Billing chart data is missing or empty.');
+        }
+    </script>
+{% endblock %}

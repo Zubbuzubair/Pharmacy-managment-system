@@ -1,0 +1,27 @@
+FOLDER STRUCTURE
+pharmacy_project/
+├── app.py          # Main Flask app
+├── templates/      # HTML files
+	   ├── index.html  # Homepage
+   	   ├── inventory.html
+  	   ├── prescriptions.html
+   	   └── billing.html
+
+Setup Instructions:
+Install Python 3.9+ and MySQL 8.0+.
+Install dependencies: pip install -r requirements.txt.
+Create pms_db in MySQL and run database/database.sql.
+Update app.py with your MySQL credentials.
+Run: python app.py.
+Access at http://localhost:5000.
+
+Login Credentials:
+Username: admin
+Password: admin123
+
+Files:
+setup_db_mysql: setup database via python
+mysql : import structure and data directly in mysql
+mysql.txt : all queries
+app   : backend in python
+

@@ -1,0 +1,28 @@
+{% extends "base.html" %}  <!-- Extend base template -->
+{% block title %}Edit Billing{% endblock %}  <!-- Set page title -->
+{% block content %}  <!-- Define content block -->
+    <h1 class="mb-4">Edit Billing</h1>  <!-- Main heading with margin-bottom -->
+    <form method="POST" action="/edit_billing/{{ bill[0] }}">  <!-- Form to submit edited billing -->
+        <div class="mb-3">  <!-- Form group with margin-bottom -->
+            <label for="prescription_id" class="form-label">Prescription:</label>  <!-- Label for prescription selection -->
+            <select id="prescription_id" name="prescription_id" class="form-control" required>  <!-- Dropdown for prescription selection -->
+                {% for pres in prescriptions %}  <!-- Loop through available prescriptions -->
+                    <option value="{{ pres[0] }}" {% if pres[0] == bill[1] %}selected{% endif %}>{{ pres[1] }}</option>  <!-- Option with selected prescription -->
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-3">  <!-- Form group with margin-bottom -->
+            <label for="total_amount" class="form-label">Total Amount:</label>  <!-- Label for total amount -->
+            <input type="number" id="total_amount" name="total_amount" class="form-control" value="{{ bill[2] }}" step="0.01" required>  <!-- Input for total amount with current value -->
+        </div>
+        <div class="mb-3">  <!-- Form group with margin-bottom -->
+            <label for="payment_status" class="form-label">Payment Status:</label>  <!-- Label for payment status -->
+            <input type="text" id="payment_status" name="payment_status" class="form-control" value="{{ bill[3] }}" required>  <!-- Input for payment status with current value -->
+        </div>
+        <div class="mb-3">  <!-- Form group with margin-bottom -->
+            <label for="date" class="form-label">Date:</label>  <!-- Label for date input -->
+            <input type="date" id="date" name="date" class="form-control" value="{{ bill[4] }}" required>  <!-- Input for date with current value -->
+        </div>
+        <button type="submit" class="btn btn-primary">Update Billing</button>  <!-- Submit button to update billing -->
+    </form>
+{% endblock %}

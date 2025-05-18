@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}{% endblock %}</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            padding-top: 70px; /* Space for fixed navbar */
+        }
+        .content {
+            padding: 20px;
+        }
+        .alert-container {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            width: 100%;
+            max-width: 400px;
+            margin: 20px 0;
+        }
+        .alert-container p {
+            margin: 5px 0;
+            font-size: 16px;
+        }
+        .alert-label {
+            font-weight: bold;
+        }
+        .settings-form {
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">Pharmacy Management</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/inventory">Inventory</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/add_inventory">Add Inventory</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/prescriptions">Prescriptions</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/add_prescription">Add Prescription</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/billing">Billing</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/add_billing">Add Billing</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/set_alerts">Set Alerts</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Flash Messages -->
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <!-- Main Content -->
+    <div class="container content">
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

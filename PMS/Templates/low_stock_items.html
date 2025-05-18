@@ -1,0 +1,29 @@
+{% extends "base.html" %}  <!-- Extend base template -->
+{% block title %}Low Stock Items{% endblock %}  <!-- Set page title -->
+{% block content %}  <!-- Define content block -->
+    <h1 class="mb-4">Low Stock Items</h1>  <!-- Main heading with margin-bottom -->
+    <div class="table-responsive">  <!-- Responsive table container -->
+        <table class="table table-striped table-bordered">  <!-- Styled table -->
+            <thead class="table-dark">  <!-- Table header with dark background -->
+                <tr>  <!-- Table row for headers -->
+                    <th>ID</th>  <!-- Column header for ID -->
+                    <th>Drug Name</th>  <!-- Column header for Drug Name -->
+                    <th>Quantity</th>  <!-- Column header for Quantity -->
+                    <th>Expiry Date</th>  <!-- Column header for Expiry Date -->
+                    <th>Price</th>  <!-- Column header for Price -->
+                </tr>
+            </thead>
+            <tbody>  <!-- Table body -->
+                {% for item in low_stock_items %}  <!-- Loop through low-stock items data -->
+                <tr>  <!-- Table row for each item -->
+                    <td>{{ item[0] }}</td>  <!-- Display ID -->
+                    <td>{{ item[1] }}</td>  <!-- Display Drug Name -->
+                    <td>{{ item[2] }}</td>  <!-- Display Quantity -->
+                    <td>{{ item[3] }}</td>  <!-- Display Expiry Date -->
+                    <td>{{ item[4] }}</td>  <!-- Display Price -->
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

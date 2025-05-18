@@ -1,0 +1,24 @@
+{% extends "base.html" %}  <!-- Extend base template -->
+{% block title %}Edit Inventory{% endblock %}  <!-- Set page title -->
+{% block content %}  <!-- Define content block -->
+    <h1 class="mb-4">Edit Inventory</h1>  <!-- Main heading with margin-bottom -->
+    <form method="POST" action="/edit_inventory/{{ item[0] }}">  <!-- Form to submit edited inventory -->
+        <div class="mb-3">  <!-- Form group with margin-bottom -->
+            <label for="drug_name" class="form-label">Drug Name:</label>  <!-- Label for drug name input -->
+            <input type="text" id="drug_name" name="drug_name" class="form-control" value="{{ item[1] }}" required>  <!-- Input for drug name with current value -->
+        </div>
+        <div class="mb-3">  <!-- Form group with margin-bottom -->
+            <label for="quantity" class="form-label">Quantity:</label>  <!-- Label for quantity input -->
+            <input type="number" id="quantity" name="quantity" class="form-control" value="{{ item[2] }}" required>  <!-- Input for quantity with current value -->
+        </div>
+        <div class="mb-3">  <!-- Form group with margin-bottom -->
+            <label for="expiry_date" class="form-label">Expiry Date:</label>  <!-- Label for expiry date input -->
+            <input type="date" id="expiry_date" name="expiry_date" class="form-control" value="{{ item[3] }}" required>  <!-- Input for expiry date with current value -->
+        </div>
+        <div class="mb-3">  <!-- Form group with margin-bottom -->
+            <label for="price" class="form-label">Price:</label>  <!-- Label for price input -->
+            <input type="number" id="price" name="price" class="form-control" value="{{ item[4] }}" step="0.01" required>  <!-- Input for price with current value -->
+        </div>
+        <button type="submit" class="btn btn-primary">Update Inventory</button>  <!-- Submit button to update inventory -->
+    </form>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "base.html" %}  <!-- Extend base template -->
+{% block title %}Edit Prescription{% endblock %}  <!-- Set page title -->
+{% block content %}  <!-- Define content block -->
+    <h1 class="mb-4">Edit Prescription</h1>  <!-- Main heading with margin-bottom -->
+    <form method="POST" action="/edit_prescription/{{ prescription[0] }}">  <!-- Form to submit edited prescription -->
+        <div class="mb-3">  <!-- Form group with margin-bottom -->
+            <label for="patient_name" class="form-label">Patient Name:</label>  <!-- Label for patient name input -->
+            <input type="text" id="patient_name" name="patient_name" class="form-control" value="{{ prescription[1] }}" required>  <!-- Input for patient name with current value -->
+        </div>
+        <div class="mb-3">  <!-- Form group with margin-bottom -->
+            <label for="drug_id" class="form-label">Drug:</label>  <!-- Label for drug selection -->
+            <select id="drug_id" name="drug_id" class="form-control" required>  <!-- Dropdown for drug selection -->
+                {% for drug in drugs %}  <!-- Loop through available drugs -->
+                    <option value="{{ drug[0] }}" {% if drug[0] == prescription[2] %}selected{% endif %}>{{ drug[1] }}</option>  <!-- Option with selected drug -->
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-3">  <!-- Form group with margin-bottom -->
+            <label for="dosage_quantity" class="form-label">Dosage Quantity:</label>  <!-- Label for dosage quantity -->
+            <input type="number" id="dosage_quantity" name="dosage_quantity" class="form-control" value="{{ prescription[3] }}" required>  <!-- Input for dosage quantity with current value -->
+        </div>
+        <div class="mb-3">  <!-- Form group with margin-bottom -->
+            <label for="dosage_instructions" class="form-label">Dosage Instructions:</label>  <!-- Label for dosage instructions -->
+            <input type="text" id="dosage_instructions" name="dosage_instructions" class="form-control" value="{{ prescription[4] }}" required>  <!-- Input for dosage instructions with current value -->
+        </div>
+        <div class="mb-3">  <!-- Form group with margin-bottom -->
+            <label for="date" class="form-label">Date:</label>  <!-- Label for date input -->
+            <input type="date" id="date" name="date" class="form-control" value="{{ prescription[5] }}" required>  <!-- Input for date with current value -->
+        </div>
+        <div class="mb-3">  <!-- Form group with margin-bottom -->
+            <label for="status" class="form-label">Status:</label>  <!-- Label for status input -->
+            <input type="text" id="status" name="status" class="form-control" value="{{ prescription[6] }}" required>  <!-- Input for status with current value -->
+        </div>
+        <button type="submit" class="btn btn-primary">Update Prescription</button>  <!-- Submit button to update prescription -->
+    </form>
+{% endblock %}

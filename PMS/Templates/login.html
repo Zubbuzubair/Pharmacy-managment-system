@@ -1,0 +1,26 @@
+{% extends "base.html" %}  <!-- Extend base template -->
+{% block title %}Login{% endblock %}  <!-- Set page title -->
+{% block content %}  <!-- Define content block -->
+    <h1 class="mb-4">Login</h1>  <!-- Main heading with margin-bottom -->
+    {% with messages = get_flashed_messages(with_categories=true) %}  <!-- Retrieve flashed messages with categories -->
+        {% if messages %}  <!-- Check if there are any messages -->
+            {% for category, message in messages %}  <!-- Loop through messages -->
+                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">  <!-- Alert box with category styling -->
+                    {{ message }}  <!-- Display message -->
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>  <!-- Close button for alert -->
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <form method="POST" action="/login">  <!-- Form to submit login credentials -->
+        <div class="mb-3">  <!-- Form group with margin-bottom -->
+            <label for="username" class="form-label">Username:</label>  <!-- Label for username input -->
+            <input type="text" id="username" name="username" class="form-control" required>  <!-- Input for username -->
+        </div>
+        <div class="mb-3">  <!-- Form group with margin-bottom -->
+            <label for="password" class="form-label">Password:</label>  <!-- Label for password input -->
+            <input type="password" id="password" name="password" class="form-control" required>  <!-- Input for password -->
+        </div>
+        <button type="submit" class="btn btn-primary">Login</button>  <!-- Submit button to log in -->
+    </form>
+{% endblock %}

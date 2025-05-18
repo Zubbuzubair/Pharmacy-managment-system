@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Add Billing{% endblock %}
+{% block content %}
+    <h1 class="mb-4">Add New Bill</h1>
+    <form method="POST" action="/add_billing">
+        <div class="mb-3">
+            <label for="prescription_id" class="form-label">Prescription:</label>
+            <select id="prescription_id" name="prescription_id" class="form-select" required>
+                {% for pres in prescriptions %}
+                    <option value="{{ pres[0] }}">{{ pres[1] }} (ID: {{ pres[0] }})</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="total_amount" class="form-label">Total Amount:</label>
+            <input type="number" id="total_amount" name="total_amount" class="form-control" step="0.01" min="0" required>
+        </div>
+        <div class="mb-3">
+            <label for="payment_status" class="form-label">Payment Status:</label>
+            <select id="payment_status" name="payment_status" class="form-select" required>
+                <option value="Pending">Pending</option>
+                <option value="Paid">Paid</option>
+                <option value="Failed">Failed</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="date" class="form-label">Date (YYYY-MM-DD):</label>
+            <input type="date" id="date" name="date" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Bill</button>
+    </form>
+{% endblock %}

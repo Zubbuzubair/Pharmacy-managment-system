@@ -1,0 +1,24 @@
+{% extends "base.html" %}  <!-- Extend base template -->
+{% block title %}Add Inventory{% endblock %}  <!-- Set page title -->
+{% block content %}  <!-- Define content block -->
+    <h1 class="mb-4">Add Inventory</h1>  <!-- Main heading with margin-bottom -->
+    <form method="POST" action="/add_inventory">  <!-- Form to submit new inventory -->
+        <div class="mb-3">  <!-- Form group with margin-bottom -->
+            <label for="drug_name" class="form-label">Drug Name:</label>  <!-- Label for drug name input -->
+            <input type="text" id="drug_name" name="drug_name" class="form-control" required>  <!-- Input for drug name -->
+        </div>
+        <div class="mb-3">  <!-- Form group with margin-bottom -->
+            <label for="quantity" class="form-label">Quantity:</label>  <!-- Label for quantity input -->
+            <input type="number" id="quantity" name="quantity" class="form-control" required>  <!-- Input for quantity -->
+        </div>
+        <div class="mb-3">  <!-- Form group with margin-bottom -->
+            <label for="expiry_date" class="form-label">Expiry Date:</label>  <!-- Label for expiry date input -->
+            <input type="date" id="expiry_date" name="expiry_date" class="form-control" required>  <!-- Input for expiry date -->
+        </div>
+        <div class="mb-3">  <!-- Form group with margin-bottom -->
+            <label for="price" class="form-label">Price:</label>  <!-- Label for price input -->
+            <input type="number" id="price" name="price" class="form-control" step="0.01" required>  <!-- Input for price -->
+        </div>
+        <button type="submit" class="btn btn-primary">Add Inventory</button>  <!-- Submit button to add inventory -->
+    </form>
+{% endblock %}
